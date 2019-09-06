@@ -1,0 +1,18 @@
+Docker solr like a vm
+
+-- Create new container
+docker build -t "solr_vm:01" .
+
+-- Lunch Docker solr
+docker run --name solr01 -d -p 8983:8983 -t -v $HOME/mydata:/opt/solr/mydata solr_vm:01
+
+-- Lunch docker-ssh
+
+Proyect : https://github.com/ghcetraro/docker-ssh
+
+docker run -d -p 2222:22 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -e FILTERS={\"name\":[\"^/solr01$\"]} -e AUTH_MECHANISM=noAuth \
+  jeroenpeeters/docker-ssh
+
+Tada
