@@ -1,0 +1,8 @@
+#ignore
+
+.txt~
+.doc~
+.sh~
+.ps1~
+
+.env
