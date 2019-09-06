@@ -1,0 +1,40 @@
+Arranque
+
+Para arrancar Solr utilizamos el script solr que se encuentra en la carpeta bin. Hay una versión de este script para los sistemas operativos Linux/Unix/OSX y otra para Windows. En cualquier caso basta con ejecutar
+$ bin/solr start
+
+Una vez el servidor esté en marcha podemos acceder a la interfaz gráfica de administración de Solr en http://localhost:8983/solr/
+Para ver todas las opciones del script podemos ejecutar:
+$ bin/solr -help
+
+y para la opción start:
+$ bin/solr start –help
+
+No podemos terminar de hablar del arranque de Solr sin mencionar SolrCloud. SolrCloud es el nombre con el que se denominan una serie de funcionalidades añadidas a partir de la versión 4 para facilitar la administación de un cluster de servidores Solr para escalabilidad, tolerancia a fallos y alta disponibilidad. Para tener acceso a estas funcionalidades debemos arrancar el servidor Solr en modo SolrCloud:
+$ bin/solr start -cloud
+La descripción detallada de SolrCloud escapa al propósito de este artículo.
+
+4. Indexado
+Una vez el servidor Solr está en ejecución, lo primero que tenemos que hacer es crear un core, la estructura donde se guardará nuestro indice. Para ello ejecutamos:
+$ bin/solr create -c <nombre_del_core>
+
+Como ocurre con la opción start, podemos ejecutar:
+$ bin/solr create -help
+
+para obtener ayuda sobre las opciones disponibles para la creación de cores.
+Si en un momento dado deseamos borrar un core podemos hacerlo con el comando delete:
+$ bin/solr delete -c <nombre_del_core>
+
+$ java -jar bin/post.jar -h
+Si trabajamos en Linux/Unix/OsX, para el mismo propósito podemos hacer
+$ bin/post -h
+Y, por ejemplo, para indexar en el core de nombre productos todos los documentos de extensión pdf que se encuentren en la carpeta catalogo hacemos:
+$ bin/post -c productos catalogo/*.pdf
+
+6. Estado y parada del servidor
+Podemos obtener información básica (en formato JSON) sobre nuestro servidor Solr con el comando status:
+$ bin/solr status
+Para detener el servidor Solr ejecutamos el comando stop. Debemos indicar el puerto con la opción –p.
+$ bin/solr stop –p <puerto>
+También podemos detener todas las instancias en ejecución con la opción –all.
+$ bin/solr stop -all
