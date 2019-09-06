@@ -1,0 +1,43 @@
+Apache SOLR es el proyecto de código abierto de referencia para la creación de motores de búsqueda de grado empresarial hecho en Java. 
+En este post veremos el proceso de una búsqueda en SOLR así como las principales funcionalidades y características que hacen de SOLR un potente motor de indexado y búsqueda de contenido, que incluso puede  reemplazar al Google Search Appliance – GSA sin despeinarse. Dejaremos para una segunda parte un ejemplo práctico.
+
+Introducción a Apache SOLR
+ 
+Indexado y búsqueda de documentos
+Apache SOLR utiliza como base otro proyecto Java muy popular, Apache Lucene. Lucene es un motor de búsqueda de alto rendimiento y escalable, es potente y tiene multitud de funcionalidades orientadas a la búsqueda.
+Resumiendo muy a groso modo, se puede decir que Lucene es una librería para crear y manejar un índice invertido. Este índice invertido es un tipo de estructura de datos especializado para la búsqueda de coincidencias con un término de búsqueda en documentos de texto.
+¿Qué es un documento y qué es indexado?
+Documento: Un archivo indicando la estructura de los datos a ser procesados. En este archivo se indican: los campos y contenido para cada campo.
+Indexado: Es el proceso de añadir documentos a un índice.
+Índice: Es una colección o agrupación de documentos indexados.
+
+Esquema
+Apache SOLR permite definir la estructura de nuestro índice de forma declarativa, indicando los campos, tipos de los campos y análisis a utilizar para estos tipos de campos mediante un archivo de esquema. Este archivo de esquema puede variar dependiendo de cómo se haya configurado SOLR y puede ser:
+managed-schema: Es el nombre del archivo de esquema utilizado por defecto en SOLR y permite realizar cambios en el esquema “en caliente” a través del Schema API o utilizando el modo Schemaless. Se puede partir de un managed-schema previamente configurado y posteriormente ir añadiendo cambios utilizando la Schema API, siempre y cuando luego de cada cambio en el archivo, se recarge la configuración y se vuelvan a indexar los documentos para aplicar los cambios. El managed-schema es manejado por SOLR a través de una API.
+schema.xml : Es el archivo esquema tradicional que puede ser editado manualmente. El schema.xml es manejado por el usuario/administrador de SOLR.
+Archivo de configuración Solrconfig.xml
+En este archivo podemos configurar dos áreas importantes para el comportamiento y afinamiento de las búsquedas y resultados: request handlers y search components.
+Un request handler procesa las solicitudes que llegan a Apache SOLR. Estas solicitudes pueden ser del tipo “request” o “index update”, es decir, para solicitar información o para actualizar documentos del índice.
+Dentro de este fichero también podemos configurar los distintos “search components” disponibles en SOLR. Un search component implementa una funcionalidad específica a la búsqueda como el facetado y las sugerencias.
+Llegados a este punto, hemos visto que Lucene proporciona un potente motor para indexado de documentos, realizar búsquedas y rankear los resultados. Y que a través del archivo esquema tenemos la facilidad de definir la estructura del índice. Ahora necesitamos una forma de poder acceder a estos servicios.
+Apache SOLR: Aplicacion Web Java
+Solr es una aplicación Web Java que es la unión de varios componentes, dentro de los cuales podemos resaltar:
+Lucene para indexado y búsqueda.
+Configuración de los componentes y procesadores a través de solrconfig.xml y managed-schema.
+Pipeline de análisis de texto: tokenizadores y filtros (stopwords, sinónimos, lowercase, y más).
+Procesadores de la solicitud de actualización de documentos (index update): utilizados para modificar los campos, incluyendo valores del documento que se está por indexar.
+Componentes de búsqueda (search components): facetas, highlighting, suggester, búsqueda geoespacial y más.
+APIs: para manipulación de cores, colecciones, configuraciones y más.
+
+Terminología
+
+Core: Es el término con el que se nombra a un índice cuando SOLR está en modo de un solo servidor.
+
+Collection: Índice distribuido en shards, cuando SOLR se ejecuta en modo SOLRCloud.
+
+Shard: Contenedor de una parte del índice, replicado en uno o más servidores para implementar tolerancia a fallos con la ayuda de Zookeeper.
+
+Apache Zookeeper: Servicio centralizado para distribución de archivos de configuración y sincronización de servicios.
+
+Zookeeper Ensemble: Cluster de servidores de Zookeeper.
+
